@@ -15,23 +15,19 @@
     let score=0;
     let wicket=0;
     let scoreresult=[];
+    let hit=-0;
     
     function addNum(num){
-        if(wicket<10){
-            scoreresult.push(num);
-        score+=num;
+         hit=num;
         rootElement.render(<App/>);
-        console.log(scoreresult);
+        console.log(hit);
         }
-    }
+    
     function addWicket () {
-        if(wicket<10) {
-            scoreresult.push("W");
-            wicket+=1;
+        hit="W";
             rootElement.render(<App/>);
-            console.log(scoreresult);
-
-        }
+            
+        
     }
     const ScoreButtons= () => (
         <div>
@@ -46,6 +42,31 @@
         </div>
 
     )
+    const Result= ()=> (
+          <div>{
+            scoreresult.map((value,index)=>( <>
+                {
+                    index % 6 ===0 ? <br/>:null
+                }
+                <span key={index}>{value===0 ? <strong>.</strong>:value}</span>&nbsp;&nbsp;&nbsp;</>
+            ))
+          }</div>
+
+    )
+    //the below is a synthetic event function which basically used to control the native HTML events like form,input and button etc.
+    function handleSubmit(event){
+        event.preventDefault();
+    }
+    const Form=()=>(
+        <>
+        <form onSubmit={handleSubmit}>
+        <input value={hit}/>
+        <input/>
+        <button>submit</button>
+        </form>
+        
+        </>
+    )
 
     
 
@@ -54,6 +75,11 @@
             <h1>Score Keeper Game</h1>
             <h2>Score:{score}/{wicket}</h2>
             <ScoreButtons/>
+           
+            <br/>
+            <Form/>
+            <hr/>
+
             </>
         )
         const rootElement = ReactDOM.createRoot(document.getElementById("root"));
